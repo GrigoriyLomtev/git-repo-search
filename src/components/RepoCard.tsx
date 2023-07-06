@@ -1,4 +1,4 @@
-import { faEye, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faPencil, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
@@ -29,6 +29,7 @@ function RepoCard({ name, imgUrl, author, stars, watchers }: RepoCardProps) {
             width: "140px",
             justifyContent: "space-between",
             alignItems: "center",
+            marginBottom: "8px",
           }}
         >
           <img
@@ -77,10 +78,17 @@ function RepoCard({ name, imgUrl, author, stars, watchers }: RepoCardProps) {
             <span style={{ margin: "0 auto" }}>{watchers}</span>
           </div>
         </div>
-        <p className="card-text">lorem</p>
-        <a href="#" className="btn btn-primary">
-          Go somewhere
-        </a>
+        <div className="input-group input-group-sm mt-1">
+          <input
+            type="text"
+            className="form-control"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-sm"
+          />
+          <button className="btn btn-primary" id="inputGroup-sizing-sm">
+            <FontAwesomeIcon icon={faPencil} />
+          </button>
+        </div>
       </div>
     </div>
   );

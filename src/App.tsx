@@ -10,8 +10,6 @@ function App() {
           <SearchBar />
         </div>
         <RepoList />
-        <h1>Hello, React with TypeScript and Bootstrap!</h1>
-        <button className="btn btn-primary">Click me</button>
       </div>
     </div>
   );

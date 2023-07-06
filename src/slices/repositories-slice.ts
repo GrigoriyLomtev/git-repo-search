@@ -39,7 +39,11 @@ const initialState: RepositoriesState = {
 const repositoriesSlice = createSlice({
   name: "repositories",
   initialState,
-  reducers: {},
+  reducers: {
+    setRepositories: (state, action: PayloadAction<Repository[]>) => {
+      state.items = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchRepositories.pending, (state) => {
@@ -51,6 +55,7 @@ const repositoriesSlice = createSlice({
         (state, action: PayloadAction<Repository[]>) => {
           state.loading = false;
           state.items = action.payload;
+          localStorage.setItem("repositories", JSON.stringify(action.payload));
         }
       )
       .addCase(fetchRepositories.rejected, (state, action) => {
@@ -59,5 +64,7 @@ const repositoriesSlice = createSlice({
       });
   },
 });
+
+export const { setRepositories } = repositoriesSlice.actions;
 
 export default repositoriesSlice.reducer;
