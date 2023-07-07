@@ -3,17 +3,15 @@ import RepoCard from "./RepoCard";
 import { useTypedSelector } from "../hooks/useTypedSelector";
 import { useAppDispatch } from "../store";
 import { setRepositories } from "../slices/repositories-slice";
+import Dropdown from "./Dropdown";
+import Pagination from "./Pagination";
 
-// const mediaQueryStyle = {
-//   "@media (maxWidth:1260px)": {
-//     gridTemplateColumns: "1fr 1fr",
-//   },
-// };
 function RepoList() {
-  const { error, items, loading } = useTypedSelector(
+  const dispatch = useAppDispatch();
+  const { error, items, loading, repositoriesPerPage } = useTypedSelector(
     (state) => state.repositories
   );
-  const dispatch = useAppDispatch();
+  const paginatedItems = items.slice(0, repositoriesPerPage);
 
   useEffect(() => {
     const savedRepositories = localStorage.getItem("repositories");
@@ -36,7 +34,7 @@ function RepoList() {
         }}
       >
         {!loading &&
-          items.map((repo) => (
+          paginatedItems.map((repo) => (
             <RepoCard
               key={repo.id}
               imgUrl={repo.owner.avatar_url}
@@ -44,8 +42,16 @@ function RepoList() {
               author={repo.owner.login}
               stars={repo.stargazers_count}
               watchers={repo.watchers_count}
+              html_url={repo.html_url}
+              owner_url={repo.owner.html_url}
             />
           ))}
+      </div>
+      <div style={{ display: "flex", padding: "4px 25px" }}>
+        <Dropdown />
+        <div style={{ margin: "0 auto" }}>
+          <Pagination />
+        </div>
       </div>
     </div>
   );

@@ -3,16 +3,17 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 interface Repository {
   id: number;
   name: string;
-  // owner: string;
-  owner: { login: string; avatar_url: string };
+  owner: { login: string; avatar_url: string; html_url: string };
   stargazers_count: number;
   watchers_count: number;
+  html_url: string;
 }
 
 interface RepositoriesState {
   items: Repository[];
   loading: boolean;
   error: string | null;
+  repositoriesPerPage: number;
 }
 
 interface FetchRepositoriesPayload {
@@ -34,6 +35,7 @@ const initialState: RepositoriesState = {
   items: [],
   loading: false,
   error: null,
+  repositoriesPerPage: 10,
 };
 
 const repositoriesSlice = createSlice({
@@ -42,6 +44,9 @@ const repositoriesSlice = createSlice({
   reducers: {
     setRepositories: (state, action: PayloadAction<Repository[]>) => {
       state.items = action.payload;
+    },
+    setRepositoriesPerPage: (state, action: PayloadAction<number>) => {
+      state.repositoriesPerPage = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -65,6 +70,7 @@ const repositoriesSlice = createSlice({
   },
 });
 
-export const { setRepositories } = repositoriesSlice.actions;
+export const { setRepositories, setRepositoriesPerPage } =
+  repositoriesSlice.actions;
 
 export default repositoriesSlice.reducer;

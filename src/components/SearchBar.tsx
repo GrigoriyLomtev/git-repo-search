@@ -1,6 +1,6 @@
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchRepositories } from "../slices/repositories-slice";
 import { useAppDispatch } from "../store";
 
@@ -11,14 +11,27 @@ function SearchBar() {
   const searchRepo = async () => {
     if (inputValue.length > 2) {
       dispatch(fetchRepositories({ searchTerm: inputValue }));
-      //
-      //   const result = await fetch(
-      //     `https://api.github.com/search/repositories?q=${inputValue}`
-      //   );
-      //   const data = await result.json();
-      //   console.log(data);
+
+      // const result = await fetch(
+      //   `https://api.github.com/search/repositories?q=${inputValue}`
+      // );
+      // const data = await result.json();
+      // console.log(data);
     }
   };
+
+  const onChangeSearchBarValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    localStorage.setItem("searchBarValue", newValue);
+  };
+
+  useEffect(() => {
+    const savedSearchBarValue = localStorage.getItem("searchBarValue");
+    if (savedSearchBarValue) {
+      setInputValue(savedSearchBarValue);
+    }
+  }, []);
 
   return (
     <div className="input-group">
@@ -30,7 +43,7 @@ function SearchBar() {
         aria-describedby="basic-addon2"
         minLength={3}
         onChange={(e) => {
-          setInputValue(e.target.value);
+          onChangeSearchBarValue(e);
         }}
         value={inputValue}
       />

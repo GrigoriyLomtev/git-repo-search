@@ -1,6 +1,7 @@
 import { faEye, faPencil, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import RedirectLink from "./RedirectLink";
 
 interface RepoCardProps {
   name: string;
@@ -8,20 +9,32 @@ interface RepoCardProps {
   author: string;
   stars: number;
   watchers: number;
+  html_url: string;
+  owner_url: string;
 }
 
-function RepoCard({ name, imgUrl, author, stars, watchers }: RepoCardProps) {
+function RepoCard({
+  name,
+  imgUrl,
+  author,
+  stars,
+  watchers,
+  html_url,
+  owner_url,
+}: RepoCardProps) {
   return (
     <div className="card" style={{ maxWidth: "440px", maxHeight: "218px" }}>
       <div className="card-body">
         <h5
           className="card-title"
           style={{
+            display: "inline",
             height: "24px",
             overflow: "hidden",
+            cursor: "pointer",
           }}
         >
-          {name}
+          <RedirectLink to={html_url} text={name}></RedirectLink>
         </h5>
         <div
           style={{
@@ -29,7 +42,7 @@ function RepoCard({ name, imgUrl, author, stars, watchers }: RepoCardProps) {
             width: "140px",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: "8px",
+            margin: "8px 0",
           }}
         >
           <img
@@ -40,9 +53,14 @@ function RepoCard({ name, imgUrl, author, stars, watchers }: RepoCardProps) {
           />
           <p
             className="card-text"
-            style={{ margin: "0 auto", height: "50px", overflow: "hidden" }}
+            style={{
+              margin: "0 auto",
+              height: "50px",
+              overflow: "hidden",
+              cursor: "pointer",
+            }}
           >
-            {author}
+            <RedirectLink to={owner_url} text={author}></RedirectLink>
           </p>
         </div>
         <div
