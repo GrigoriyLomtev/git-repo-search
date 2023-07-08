@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { apiConfig } from "../apiConfig";
 
 interface Repository {
   id: number;
@@ -24,9 +25,7 @@ interface FetchRepositoriesPayload {
 export const fetchRepositories = createAsyncThunk(
   "repositories/fetchRepositories",
   async ({ searchTerm }: FetchRepositoriesPayload) => {
-    const response = await fetch(
-      `https://api.github.com/search/repositories?q=${searchTerm}`
-    );
+    const response = await fetch(`${apiConfig.baseUrl}${searchTerm}`);
     const data = await response.json();
     return data.items as Repository[];
   }
