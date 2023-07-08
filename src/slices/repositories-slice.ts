@@ -13,6 +13,7 @@ interface RepositoriesState {
   items: Repository[];
   loading: boolean;
   error: string | null;
+  currentPage: number;
   repositoriesPerPage: number;
 }
 
@@ -35,6 +36,7 @@ const initialState: RepositoriesState = {
   items: [],
   loading: false,
   error: null,
+  currentPage: 1,
   repositoriesPerPage: 10,
 };
 
@@ -45,7 +47,10 @@ const repositoriesSlice = createSlice({
     setRepositories: (state, action: PayloadAction<Repository[]>) => {
       state.items = action.payload;
     },
-    setRepositoriesPerPage: (state, action: PayloadAction<number>) => {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setRepositoriesPerPage: (state, action) => {
       state.repositoriesPerPage = action.payload;
     },
   },
@@ -70,7 +75,7 @@ const repositoriesSlice = createSlice({
   },
 });
 
-export const { setRepositories, setRepositoriesPerPage } =
+export const { setRepositories, setCurrentPage, setRepositoriesPerPage } =
   repositoriesSlice.actions;
 
 export default repositoriesSlice.reducer;

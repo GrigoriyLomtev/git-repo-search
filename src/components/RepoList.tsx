@@ -8,10 +8,12 @@ import Pagination from "./Pagination";
 
 function RepoList() {
   const dispatch = useAppDispatch();
-  const { error, items, loading, repositoriesPerPage } = useTypedSelector(
-    (state) => state.repositories
-  );
-  const paginatedItems = items.slice(0, repositoriesPerPage);
+  const { error, items, loading, repositoriesPerPage, currentPage } =
+    useTypedSelector((state) => state.repositories);
+
+  const startIndex = (currentPage - 1) * repositoriesPerPage;
+  const endIndex = startIndex + repositoriesPerPage;
+  const repositoriesToShow = items.slice(startIndex, endIndex);
 
   useEffect(() => {
     const savedRepositories = localStorage.getItem("repositories");
@@ -34,7 +36,7 @@ function RepoList() {
         }}
       >
         {!loading &&
-          paginatedItems.map((repo) => (
+          repositoriesToShow.map((repo) => (
             <RepoCard
               key={repo.id}
               imgUrl={repo.owner.avatar_url}
@@ -47,12 +49,14 @@ function RepoList() {
             />
           ))}
       </div>
-      <div style={{ display: "flex", padding: "4px 25px" }}>
-        <Dropdown />
-        <div style={{ margin: "0 auto" }}>
-          <Pagination />
+      {!loading && items.length > 0 && (
+        <div style={{ display: "flex", padding: "4px 25px" }}>
+          <Dropdown />
+          <div style={{ margin: "0 auto" }}>
+            <Pagination />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

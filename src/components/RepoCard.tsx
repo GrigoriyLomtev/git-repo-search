@@ -34,7 +34,9 @@ function RepoCard({
             cursor: "pointer",
           }}
         >
-          <RedirectLink to={html_url} text={name}></RedirectLink>
+          <div style={{ height: "24px", overflow: "hidden" }}>
+            <RedirectLink to={html_url} text={name}></RedirectLink>
+          </div>
         </h5>
         <div
           style={{
@@ -102,6 +104,7 @@ function RepoCard({
             className="form-control"
             aria-label="Sizing example input"
             aria-describedby="inputGroup-sizing-sm"
+            name={name}
           />
           <button className="btn btn-primary" id="inputGroup-sizing-sm">
             <FontAwesomeIcon icon={faPencil} />
