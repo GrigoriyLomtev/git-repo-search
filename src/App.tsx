@@ -5,12 +5,12 @@ import RepoList from "./components/RepoList";
 function App() {
   return (
     <div className="app">
-      <div className="container">
-        <div style={{ padding: "32px 39px 47px 25px" }}>
+      <main className="container">
+        <nav style={{ padding: "32px 39px 47px 25px" }}>
           <SearchBar />
-        </div>
+        </nav>
         <RepoList />
-      </div>
+      </main>
     </div>
   );
 }
