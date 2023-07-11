@@ -41,7 +41,7 @@ function RepoCard({
         <div
           style={{
             display: "flex",
-            width: "140px",
+            width: "180px",
             justifyContent: "space-between",
             alignItems: "center",
             margin: "8px 0",
@@ -56,7 +56,7 @@ function RepoCard({
           <p
             className="card-text"
             style={{
-              margin: "0 auto",
+              margin: "0 auto 0 8px",
               height: "50px",
               overflow: "hidden",
               cursor: "pointer",

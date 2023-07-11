@@ -27,14 +27,7 @@ function RepoList() {
     <div style={{ display: "grid" }}>
       {error && <h1 style={{ margin: "0 auto" }}>Ошибка запроса</h1>}
       {loading && <h1 style={{ margin: "0 auto" }}>Поиск проектов...</h1>}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          padding: "34px 25px",
-          gap: "10px",
-        }}
-      >
+      <div className="repo-list">
         {!loading &&
           repositoriesToShow.map((repo) => (
             <RepoCard
