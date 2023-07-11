@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch } from "../store";
 import { setCurrentPage } from "../slices/repositories-slice";
 import { useTypedSelector } from "../hooks/useTypedSelector";
@@ -14,8 +14,9 @@ function Pagination() {
   );
   const totalPages = Math.ceil(totalItems / repositoriesPerPage);
 
-  const handlePageChange = (newPage: number) => {
-    dispatch(setCurrentPage(newPage));
+  const handlePageChange = (newCurrentPage: number) => {
+    dispatch(setCurrentPage(newCurrentPage));
+    localStorage.setItem("currentPage", newCurrentPage.toString());
   };
 
   const renderPageButtons = () => {
@@ -25,7 +26,7 @@ function Pagination() {
       buttons.push(
         <li className="page-item" key={i}>
           <button
-            className="page-link"
+            className={`page-link ${i === currentPage ? "active" : ""}`}
             onClick={() => handlePageChange(i)}
             disabled={i === currentPage}
           >
@@ -38,15 +39,22 @@ function Pagination() {
     return buttons;
   };
 
+  useEffect(() => {
+    const currentPageString = localStorage.getItem("currentPage");
+    if (currentPageString) {
+      const currentPage = Number(currentPageString);
+      dispatch(setCurrentPage(currentPage));
+    }
+  }, [dispatch]);
+
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination">
         <li className="page-item">
           <button
-            className="page-link"
+            className={`page-link ${currentPage === 1 ? "disabled" : ""}`}
             aria-label="Previous"
             onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
           >
             <span aria-hidden="true">&laquo;</span>
           </button>
@@ -54,10 +62,11 @@ function Pagination() {
         {renderPageButtons()}
         <li className="page-item">
           <button
-            className="page-link"
+            className={`page-link ${
+              currentPage === totalPages ? "disabled" : ""
+            }`}
             aria-label="Next"
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
           >
             <span aria-hidden="true">&raquo;</span>
           </button>

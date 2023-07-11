@@ -46,10 +46,10 @@ const repositoriesSlice = createSlice({
     setRepositories: (state, action: PayloadAction<Repository[]>) => {
       state.items = action.payload;
     },
-    setCurrentPage: (state, action) => {
+    setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-    setRepositoriesPerPage: (state, action) => {
+    setRepositoriesPerPage: (state, action: PayloadAction<number>) => {
       state.repositoriesPerPage = action.payload;
     },
   },
@@ -64,6 +64,8 @@ const repositoriesSlice = createSlice({
         (state, action: PayloadAction<Repository[]>) => {
           state.loading = false;
           state.items = action.payload;
+          state.currentPage = 1;
+          localStorage.setItem("currentPage", "1");
           localStorage.setItem("repositories", JSON.stringify(action.payload));
         }
       )

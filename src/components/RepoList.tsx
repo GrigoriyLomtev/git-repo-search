@@ -24,7 +24,7 @@ function RepoList() {
   }, [dispatch]);
 
   return (
-    <div style={{ display: "grid" }}>
+    <div style={{ display: "grid", backgroundColor: "white" }}>
       {error && <h1 style={{ margin: "0 auto" }}>Ошибка запроса</h1>}
       {loading && <h1 style={{ margin: "0 auto" }}>Поиск проектов...</h1>}
       <div className="repo-list">
